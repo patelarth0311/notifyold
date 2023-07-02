@@ -22,7 +22,7 @@ export type Entry = {
     content: string,
     flag: boolean,
     priority: number,
-    date: string
+    time: string
 }
 
 export type  AppStatus = {

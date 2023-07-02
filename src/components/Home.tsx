@@ -163,7 +163,7 @@ export function NoteLibrary() {
                               case "flagged":
                                 return item.flag === true;
                               case "date":
-                                return item.date !== undefined;
+                                return item.time !== undefined;
                             default:
                               return true;
                           }
@@ -192,14 +192,15 @@ export function NoteLibrary() {
                 {notes
                   .filter((item) => {
                     const metConditionList = item.content.map((item) => {
-                       
+                     
                       switch (optionFilter) {
                         case "priority":
                           return item.priority !== 0;
                         case "flagged":
                           return item.flag === true;
                         case "date":
-                          return item.date !== undefined;
+                          
+                          return item.time !== undefined;
                         default:
                           return true;
                       }

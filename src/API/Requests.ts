@@ -43,7 +43,7 @@ var postEntry = async(entry: Entry, noteId: string, userId: string) => {
   try {
     return await axios({
       method: 'post',
-      url: `https://gssn270rpj.execute-api.us-east-1.amazonaws.com/notify/postentry?noteId=${noteId}&content=${entry.content}&flag=${entry.flag}&priority=${entry.priority}&time=${entry.date}&userId=${userId}`
+      url: `https://gssn270rpj.execute-api.us-east-1.amazonaws.com/notify/postentry?noteId=${noteId}&content=${entry.content}&flag=${entry.flag}&priority=${entry.priority}&time=${entry.time}&userId=${userId}`
     })
   } catch (err) {
     
@@ -55,7 +55,7 @@ var postEntry = async(entry: Entry, noteId: string, userId: string) => {
     try {
       return await axios({
         method: 'post',
-        url: `https://gssn270rpj.execute-api.us-east-1.amazonaws.com/notify/changeentry?noteId=${noteId}&content=${entry.content}&flag=${entry.flag}&priority=${entry.priority}&time=${entry.date}&entryId=${entry.entryId}&userId=${userId}`
+        url: `https://gssn270rpj.execute-api.us-east-1.amazonaws.com/notify/changeentry?noteId=${noteId}&content=${entry.content}&flag=${entry.flag}&priority=${entry.priority}&time=${entry.time}&entryId=${entry.entryId}&userId=${userId}`
       })
     } catch (err) {
       

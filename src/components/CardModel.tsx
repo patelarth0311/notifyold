@@ -30,14 +30,14 @@ export function CardModel(props: Model & { note: Note }) {
   const [editEntry, setEditEntry] = useState({
     content: "",
     flag: false,
-    date: "",
+    time: "",
     priority: 0,
   });
 
   const [entry, setEntry] = useState({
     content: "",
     flag: false,
-    date: "",
+    time: "",
     priority: 0,
   });
 
@@ -159,7 +159,7 @@ export function CardModel(props: Model & { note: Note }) {
                 onClick={() => {
                   setEditMode(false);
                   setCreateEntry(false);
-                  setEntry({ content: "", date: "", priority: 1, flag: false });
+                  setEntry({ content: "", time: "", priority: 0, flag: false });
                 }}
                 className={
                   "bg-indigo-500 w-[90px] h-[30px] rounded-md text-white "
@@ -188,8 +188,8 @@ export function CardModel(props: Model & { note: Note }) {
                         setCreateEntry(false);
                         setEntry({
                           content: "",
-                          date: "",
-                          priority: 1,
+                          time: "",
+                          priority: 0,
                           flag: false,
                         });
                       }
@@ -227,8 +227,8 @@ function CreateEntryField(props: {
         <div className="flex gap-x-2  w-full">
           <img src={cal} width={20}></img>
           <input
-            name="date"
-            value={props.entry.date}
+            name="time"
+            value={props.entry.time}
             onChange={props.handleChange}
             type="date"
             className=" border  w-full rounded-lg focus:outline-indigo-500 pl-1 p-1"
@@ -294,7 +294,7 @@ function EditEntryField(props: {
   const [editEntry, setEditEntry] = useState({
     content: props.item.content,
     flag: props.item.flag,
-    date: props.item.date,
+    time: props.item.time,
     priority: props.item.priority,
   });
 
