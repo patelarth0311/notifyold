@@ -3,11 +3,6 @@ import { PinInput, PinInputField } from "@chakra-ui/react";
 import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { confirmUser } from "../API/Requests";
-import { useContext } from "react";
-import { MyContext } from "./Context";
-import { useToast } from "@chakra-ui/react";
-import error from "../svgs/error.svg";
-import check from "../svgs/check.svg";
 
 export function UserForm(
   props: UserFormFields & { showErrorMessage: boolean }

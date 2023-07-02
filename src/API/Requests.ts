@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Note } from "../types/types";
 import { Entry } from "../types/types";
 
 

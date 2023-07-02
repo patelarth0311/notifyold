@@ -81,7 +81,7 @@ export function Landing() {
                             localStorage.setItem("RefreshToken", idToken)
 
                             {makeToast(   <p className="absolute left-10" >👋</p>,"Welcome to Notify!","border-indigo-500",toast)}
-                            console.log(cachedSession)
+                           
                             var username = cachedSession.getAccessToken().payload.username
                             setAppStatus({...appStatus, userId: username})
                             localStorage.setItem("userId", username)
@@ -125,11 +125,10 @@ export function Landing() {
                             && formData.confirmPassword === formData.password) {
                                 setShowErrorMessage(false)
                                 addUser(formData.email, formData.password).then((res) => {
-                                    console.log(res)
                                     if (res  && res.status === 200) {
                                         setFormData({email: "", password: "", confirmPassword: ""})
                                         setShowPin(true)
-                                       
+                                    
                                         setUser((prev) => {
 
                                             return {...prev,userId: res.data.UserSub, username: formData.email}

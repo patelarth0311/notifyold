@@ -1,13 +1,9 @@
 import menu from "../svgs/menu.svg";
 import pencil from "../svgs/pencil.svg";
 import logout from "../svgs/signout.svg";
-import user from "../svgs/user.svg";
-import { info, log } from "console";
 import { useState } from "react";
-import axios from "axios";
 import { ListCreation } from "./ListCreation";
 import close from "../svgs/close.svg";
-import { makeToast } from "./Toast";
 import information from "../svgs/information.svg"
 import { MyContext } from "./Context";
 import { useContext } from "react";
@@ -70,7 +66,7 @@ function Logout() {
       onClick={() => {
         localStorage.clear();
         setAppStatus({userId: "", response: "", status: ""})
-        
+
       }}
       className="shadow-2xl rounded-full bg-indigo-500 w-10 h-10 flex justify-center items-center fixed top-7 right-24"
     >

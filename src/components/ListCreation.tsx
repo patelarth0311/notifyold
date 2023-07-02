@@ -1,20 +1,10 @@
-import { Axios } from "axios";
+
 import { addNote } from "../API/Requests";
 import { useState } from "react";
-import { Note } from "../types/types";
 import { useContext } from "react";
 import { MyContext } from "./Context";
 import { useToast } from "@chakra-ui/react";
 import check from "../svgs/check.svg";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
 import { makeToast } from "./Toast";
 
 export function ListCreation(props: { setToggle: () => void }) {

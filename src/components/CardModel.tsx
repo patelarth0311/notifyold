@@ -70,7 +70,7 @@ export function CardModel(props: Model & { note: Note }) {
                   response: res.data,
                 });
                 props.setOpen(false);
-                {makeToast(  <img className="absolute left-10" src={check}></img>,props.note.name,"border-[#6FCF97]",toast, "deleted!")}
+                makeToast(  <img className="absolute left-10" src={check}></img>,props.note.name,"border-[#6FCF97]",toast, "deleted!")
               }
             });
           }}
@@ -299,7 +299,8 @@ function EditEntryField(props: {
   });
 
   useEffect(() => {
-    document.addEventListener("click", (e) => {
+
+    const handleInput  = (e: Event) => {
       if (inputRef.current) {
         if (!inputRef.current.contains(e.target as Node)) {
           setSelectedField(false);
@@ -308,16 +309,14 @@ function EditEntryField(props: {
           }
         }
       }
+    }
+
+    document.addEventListener("click", (e) => {
+        handleInput(e)
     });
 
-    return document.removeEventListener("click", (e) => {
-      if (inputRef.current) {
-        if (
-          !inputRef.current.contains(e.target as Node) &&
-          props.item.entryId
-        ) {
-        }
-      }
+    return () => document.removeEventListener("click", (e) => {
+        handleInput(e)
     });
   }, []);
 
