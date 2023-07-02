@@ -44,7 +44,7 @@ export function CardModel(props: Model & { note: Note }) {
   const handleChange = (e: any) => {
     if (e.target) {
       const { name, value, type, checked } = e.target;
-      console.log(value)
+    
       setEntry((prev) => {
         return {
           ...prev,

@@ -91,6 +91,7 @@ export function NoteLibrary() {
     if (!checkSession()) {
       {makeToast(   <img className="absolute left-10" width={20} src={error}></img>,"You have been signed out","border-[#dc2626]",toast)}
       localStorage.clear()
+      setAppStatus({userId: "", response: "", status: ""})
     }
   },[])
 
@@ -99,7 +100,7 @@ export function NoteLibrary() {
 
     if (appStatus.userId) {
       readNote(appStatus.userId).then((res) => {
-        console.log(res)
+     
         if (res) {
           if (res.data.Items) {
             setNote(
