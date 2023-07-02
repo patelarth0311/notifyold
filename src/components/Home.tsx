@@ -45,7 +45,7 @@ var checkSession = () => {
     };
 
     const cachedSession = new CognitoUserSession(sessionData);
-
+    console.log(cachedSession)
     if (cachedSession.isValid()) {
       return true;
     }
