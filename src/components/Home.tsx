@@ -96,29 +96,37 @@ export function NoteLibrary() {
 
 
   useEffect(() => {
-    readNote().then((res) => {
-      if (res) {
-        if (res.data.Items) {
-          setNote(
-            res.data.Items.map((item: Note, index: number) => {
-              if (noteSelect.noteId === item.noteId) {
-                setNoteSelected({
+
+    if (appStatus.userId) {
+      readNote(appStatus.userId).then((res) => {
+        console.log(res)
+        if (res) {
+          if (res.data.Items) {
+            setNote(
+              res.data.Items.map((item: Note, index: number) => {
+                if (noteSelect.noteId === item.noteId) {
+                  setNoteSelected({
+                    name: item.name,
+                    content: Object.values(item.content),
+                    noteId: item.noteId,
+                  });
+                }
+               
+                return {
                   name: item.name,
                   content: Object.values(item.content),
                   noteId: item.noteId,
-                });
-              }
-             
-              return {
-                name: item.name,
-                content: Object.values(item.content),
-                noteId: item.noteId,
-              };
-            })
-          );
+                };
+              })
+            );
+          }
         }
-      }
-    });
+      });
+    }
+
+
+
+
   }, [appStatus]);
 
 

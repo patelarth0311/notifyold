@@ -65,12 +65,12 @@ var postEntry = async(entry: Entry, noteId: string, userId: string) => {
 
 
 
-  var readNote = async () => {
+  var readNote = async (userId: string) => {
 
     try {
       return await axios({
         method: 'get',
-        url: `https://gssn270rpj.execute-api.us-east-1.amazonaws.com/notify/getnote`
+        url: `https://gssn270rpj.execute-api.us-east-1.amazonaws.com/notify/getnote?userId=${userId}`
       })
     } catch (err) {
       
