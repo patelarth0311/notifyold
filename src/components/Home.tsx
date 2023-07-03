@@ -95,8 +95,18 @@ export function NoteLibrary() {
     }
   },[])
 
-
+  const arr = Array(20).fill(0)
   useEffect(() => {
+
+
+    arr.forEach((item, index) => {
+      setNote((prev) => [...prev, {name: "Chem Exam", content: [], noteId: index.toString()}])
+    })
+
+
+  },[])
+
+ useEffect(() => {
 
     if (appStatus.userId) {
       readNote(appStatus.userId).then((res) => {
@@ -128,7 +138,7 @@ export function NoteLibrary() {
 
 
 
-  }, [appStatus]);
+  }, [appStatus]); 
 
 
 
@@ -177,7 +187,7 @@ export function NoteLibrary() {
                               return true;
                           }
                         });
-                        return metConditionList.includes(true);
+                        return (item.content.length === 0 && ( optionFilter === "" || optionFilter === "all") || metConditionList.includes(true));
                       })
                       .filter((item) => {
                         return item.name
@@ -215,7 +225,7 @@ export function NoteLibrary() {
                       }
                     });
          
-                    return (item.content.length === 0 && optionFilter === "") || metConditionList.includes(true);
+                    return (item.content.length === 0 && ( optionFilter === "" || optionFilter === "all") || metConditionList.includes(true));
                   })
                   .filter((item) => {
                     return item.name
@@ -259,9 +269,9 @@ export function Card(props: { action: () => void; note: Note }) {
       }
     >
       <div className="flex justify-start p-[16px] gap-x-5 h-full">
-        <div className=" justify-start items-start flex flex-col">
-          <p className="text-[17px] font-bold ">{props.note.name}</p>
-          <p className="text-[24px] font-bold ">{props.note.content.length}</p>
+        <div className=" justify-start items-start flex flex-col w-auto ">
+          <p className="text-[17px] font-bold text-left">{props.note.name}</p>
+          <p className="text-[24px] font-bold text-left ">{props.note.content.length}</p>
         </div>
         <div className="flex overflow-y-auto relative h-full flex-col w-full gap-y-1 text-gray-500">
           {props.note.content.map((item, index) => (
