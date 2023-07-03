@@ -174,7 +174,7 @@ export function NoteLibrary() {
                               case "flagged":
                                 return item.flag === true;
                               case "date":
-                                return item.time !== undefined;
+                                return item.time !== undefined && item.time.length === 0;
                             default:
                               return true;
                           }
@@ -215,13 +215,13 @@ export function NoteLibrary() {
                         case "flagged":
                           return item.flag === true;
                         case "date":
-                          return item.time !== undefined;
+                          return item.time !== undefined && item.time.length === 0;
                         default:
                           return true;
                       }
                     });
          
-                    return (item.content.length === 0 && ( optionFilter === "" || optionFilter === "all") || metConditionList.includes(true));
+                    return ((item.content.length === 0 && ( optionFilter === "" || optionFilter === "all")) || metConditionList.includes(true));
                   })
                   .filter((item) => {
                     return item.name
