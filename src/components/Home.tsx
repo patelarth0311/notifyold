@@ -210,7 +210,7 @@ export function NoteLibrary() {
                         case "flagged":
                           return item.flag === true;
                         case "date":
-                          return item.time !== undefined && item.time.length === 0;
+                          return item.time !== undefined && item.time.length !== 0;
                         default:
                           return true;
                       }
