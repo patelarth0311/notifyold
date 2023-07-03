@@ -63,7 +63,7 @@ export function Home() {
 
   return (
     <div className="flex min-h-screen width-full justify-end text-center 0  relative flex-col  bg-neutral-50">
-      <div className="grow min-h-[200px] flex flex-col justify-center">
+      <div className="min-h-[180px] flex flex-col justify-center">
         <p className="font-ver text-4xl  text-center ">Notify</p>
       </div>
 

@@ -22,10 +22,8 @@ function App() {
          
       <MyContext.Provider value={value}>
 
-   {appStatus.userId ?    <Home></Home> 
-   : <Landing></Landing>
-
-   }
+   <Home></Home> 
+  
 
 
 

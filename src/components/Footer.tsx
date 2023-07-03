@@ -3,7 +3,7 @@ import linkedin from "../svgs/linkedin.svg";
 
 export function Footer() {
   return (
-    <div className="flex flex-col  bg-indigo-600 justify-center gap-y-3 items-center h-[150px]">
+    <div className="flex flex-col  bg-indigo-600 justify-center gap-y-3 items-center h-[140px]">
       <h1 className="text-xl font-ver text-center text-white">Notify</h1>
       <div className="flex  gap-x-4 ">
         <a

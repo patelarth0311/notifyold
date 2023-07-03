@@ -8,7 +8,7 @@ export function OptionsBar(props: {
   optionFilter: string;
 }) {
   return (
-    <div className="flex    items-start ml-[10px] justify-start  gap-[11px] flex-wrap flex-row   p-1 ">
+    <div className="flex mobile:justify-center   items-start ml-[10px] justify-start  gap-[11px] flex-wrap flex-row   p-1 ">
       <Option
         setOptionFilter={props.setOptionFilter}
         optionFilter={props.optionFilter}
