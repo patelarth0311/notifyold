@@ -179,6 +179,7 @@ export function NoteLibrary() {
                               return true;
                           }
                         });
+                        console.log(optionFilter)
                         console.log(item)
                         console.log(metConditionList)
                         return ((item.content.length === 0 && ( optionFilter === "" || optionFilter === "all")) || metConditionList.includes(true));
