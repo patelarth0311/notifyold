@@ -178,7 +178,8 @@ export function NoteLibrary() {
                               return true;
                           }
                         });
-                        return (item.content.length === 0 && ( optionFilter === "" || optionFilter === "all") || metConditionList.includes(true));
+                        console.log(item)
+                        return ((item.content.length === 0 && ( optionFilter === "" || optionFilter === "all")) || metConditionList.includes(true));
                       })
                       .filter((item) => {
                         return item.name
@@ -209,7 +210,6 @@ export function NoteLibrary() {
                         case "flagged":
                           return item.flag === true;
                         case "date":
-                          
                           return item.time !== undefined;
                         default:
                           return true;
