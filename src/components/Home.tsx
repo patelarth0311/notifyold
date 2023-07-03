@@ -45,7 +45,7 @@ var checkSession = () => {
     };
 
     const cachedSession = new CognitoUserSession(sessionData);
-    console.log(cachedSession)
+
     if (cachedSession.isValid()) {
       return true;
     }
@@ -167,6 +167,7 @@ export function NoteLibrary() {
                     {notes
                       .filter((item) => {
                         const metConditionList = item.content.map((item) => {
+                          
                           switch (optionFilter) {
                             case "priority":
                                 return item.priority !== 0;
@@ -179,6 +180,7 @@ export function NoteLibrary() {
                           }
                         });
                         console.log(item)
+                        console.log(metConditionList)
                         return ((item.content.length === 0 && ( optionFilter === "" || optionFilter === "all")) || metConditionList.includes(true));
                       })
                       .filter((item) => {
