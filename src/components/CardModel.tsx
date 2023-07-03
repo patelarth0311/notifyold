@@ -20,6 +20,7 @@ import { useToast } from "@chakra-ui/react";
 import check from "../svgs/check.svg";
 import minus from "../svgs/minus.svg";
 import { makeToast } from "./Toast";
+import flag from "../svgs/flag.svg"
 
 export function CardModel(props: Model & { note: Note }) {
   const [editMode, setEditMode] = useState(false);
@@ -328,6 +329,7 @@ function EditEntryField(props: {
 
   return (
     <div className="flex flex-row gap-x-2 justify-between w-full ">
+      <div className="w-full">
       <input
         ref={inputRef}
         value={editEntry.content}
@@ -362,6 +364,16 @@ function EditEntryField(props: {
         }
         disabled={!props.editMode}
       ></input>
+         <div className="flex  gap-x-1 p-1 items-center justify-start ">
+            <p className="text-[11px] font-medium text-black text-left">{props.item.time}</p>
+            <p className="text-[11px] font-medium  text-left text-[#f59e0b]">{"!".repeat(props.item.priority)}</p>
+            {props.item.flag && (
+              <img width={12} src={flag}></img>
+            )
+            }
+              </div>
+      </div>
+
 
       {props.editEntry && selectedField && (
         <button

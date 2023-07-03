@@ -95,16 +95,6 @@ export function NoteLibrary() {
     }
   },[])
 
-  const arr = Array(20).fill(0)
-  useEffect(() => {
-
-
-    arr.forEach((item, index) => {
-      setNote((prev) => [...prev, {name: "Chem Exam", content: [], noteId: index.toString()}])
-    })
-
-
-  },[])
 
  useEffect(() => {
 
@@ -139,6 +129,7 @@ export function NoteLibrary() {
 
 
   }, [appStatus]); 
+
 
 
 
@@ -275,9 +266,17 @@ export function Card(props: { action: () => void; note: Note }) {
         </div>
         <div className="flex overflow-y-auto relative h-full flex-col w-full gap-y-1 text-gray-500">
           {props.note.content.map((item, index) => (
+            <div className="flex flex-col items-start  ">
+
             <p className="text-[15px] text-left" key={index}>
               {item.content}
             </p>
+            <div className="flex  gap-x-1 ">
+            <p className="text-[10px] font-medium text-black text-left">{item.time}</p>
+            <p className="text-[10px] font-medium  text-left text-[#f59e0b]">{"!".repeat(item.priority)}</p>
+              </div>
+           
+            </div>
           ))}
         </div>
       </div>
