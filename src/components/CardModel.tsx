@@ -21,6 +21,7 @@ import check from "../svgs/check.svg";
 import minus from "../svgs/minus.svg";
 import { makeToast } from "./Toast";
 import flag from "../svgs/flag.svg"
+import circle from "../svgs/circle.svg"
 
 export function CardModel(props: Model & { note: Note }) {
   const [editMode, setEditMode] = useState(false);
@@ -51,13 +52,13 @@ export function CardModel(props: Model & { note: Note }) {
           ...prev,
           [name]: type === "checkbox" ? checked : value,
         };
-      });
+      }); 
     }
   };
 
   return (
-    <div className="flex gap-y-4 flex-col p-10 ">
-      <div className="flex gap-x-3 justify-end ">
+    <div className="flex gap-y-4 w-full h-full flex-col overflow-y-hidden relative ">
+      <div className="flex z-50 p-3 top-3 flex-row gap-y-2 right-1 gap-x-3 justify-end absolute">
         <button
           onClick={() => {
             deleteNote(
@@ -94,7 +95,17 @@ export function CardModel(props: Model & { note: Note }) {
             <img width={15} src={edit}></img>
           </button>
         )}
-
+        <button
+          onClick={() => {
+            setEditMode(false);
+            setCreateEntry((prev) => !prev);
+          }}
+          className={
+            "  shadow-2xl rounded-full bg-indigo-500 w-8 h-8 flex justify-center items-center "
+          }
+        >
+          <img width={15} src={plus}></img>
+        </button>
         <button
           onClick={() => props.setOpen(false)}
           className="shadow-2xl rounded-full bg-indigo-500 w-8 h-8  flex justify-center items-center "
@@ -105,16 +116,16 @@ export function CardModel(props: Model & { note: Note }) {
 
       <div
         className={
-          "mobile:w-[355px]  relative shadow-custom mobile:h-[410px]   w-[493.5px] h-[517.5px]   aspect-square rounded-[21.67px] bg-white "
+          "w-full h-full   aspect-square   pt-[10px]"
         }
       >
-        <div className="flex justify-start p-[15px] flex-col h-full b">
+        <div className="flex justify-start p-[15px] flex-col h-full rounded-[34px]   bg-white">
           <div className="justify-start flex  h-full gap-y-2 flex-col ">
-            <p className="text-[17px] text-left font-bold text-black sticky">
+            <p className="text-[25px] text-left font-bold text-black sticky">
               {props.note.name}
             </p>
-            <div className="overflow-y-auto h-full relative ">
-              <div className="flex justify-start items-start flex-col overflow-hidden w-full gap-y-3 overflow-y-auto p-1">
+            <div className="overflow-y-auto h-full relative flex  ">
+              <div className="flex  items-start w-full flex-col overflow-hidden  gap-y-3 overflow-y-auto p-1">
                 {props.note.content.map((item, index) => (
                   <EditEntryField
                     appStatus={appStatus}
@@ -141,17 +152,6 @@ export function CardModel(props: Model & { note: Note }) {
         </div>
       </div>
       <div className=" flex justify-between items-center w-full">
-        <button
-          onClick={() => {
-            setEditMode(false);
-            setCreateEntry((prev) => !prev);
-          }}
-          className={
-            "  shadow-2xl rounded-full bg-indigo-500 w-8 h-8 flex justify-center items-center "
-          }
-        >
-          <img width={15} src={plus}></img>
-        </button>
 
         {(createEntry || editMode) && (
           <div className=" flex gap-x-1">
@@ -291,7 +291,8 @@ function EditEntryField(props: {
   appStatus: AppStatus;
 }) {
   const [selectedField, setSelectedField] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [expand, setExpand] = useState(false)
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [editEntry, setEditEntry] = useState({
     content: props.item.content,
     flag: props.item.flag,
@@ -305,9 +306,10 @@ function EditEntryField(props: {
       if (inputRef.current) {
         if (!inputRef.current.contains(e.target as Node)) {
           setSelectedField(false);
-          if (!inputRef.current.contains(e.target as Node)) {
-            setSelectedField(false);
-          }
+          inputRef.current.scrollTop = 0
+         
+        } else {
+          setSelectedField(true);
         }
       }
     }
@@ -328,14 +330,18 @@ function EditEntryField(props: {
   }, [selectedField]);
 
   return (
-    <div className="flex flex-row gap-x-2 justify-between w-full ">
-      <div className="w-full">
-      <input
+    <div className="flex flex-row gap-x-2 justify-center relative  w-full ">
+      <div className="w-full  max-w-[863px] relative">
+        <div className="flex items-start gap-x-3">
+        <img width={18} className="mt-[18px]" src={circle}></img>
+        <div className="w-full">
+        <textarea
+      spellCheck={false}
+        style={{resize: 'none'}}
+        rows={selectedField ? 15 :0}
         ref={inputRef}
         value={editEntry.content}
-        onClick={() => {
-          setSelectedField((prev) => !prev);
-        }}
+  
         onKeyDown={(e) => {
           if (props.item.entryId && e.key === "Enter") {
             changeEntry(
@@ -359,12 +365,12 @@ function EditEntryField(props: {
           });
         }}
         className={
-          "text-[15px] h-auto bg-white focus:outline-none relative rounded-md  w-full p-1 " +
-          (props.editMode ? "  border" : "")
+          "text-[15px]  w-full  max-w-[863px] h-auto bg-white ocus:outline-none relative rounded-md   p-1 " + (!selectedField ? 'overflow-hidden'  : "overflow-auto")
         }
-        disabled={!props.editMode}
-      ></input>
-         <div className="flex  gap-x-1 p-1 items-center justify-start ">
+        
+      
+      ></textarea>
+               <div className="flex  gap-x-1 p-1 items-center justify-start ">
             <p className="text-[11px] font-medium text-black text-left">{props.item.time}</p>
             <p className="text-[11px] font-medium  text-left text-[#f59e0b]">{"!".repeat(props.item.priority)}</p>
             {props.item.flag && (
@@ -372,10 +378,12 @@ function EditEntryField(props: {
             )
             }
               </div>
-      </div>
+        </div>
+
+        </div>
 
 
-      {props.editEntry && selectedField && (
+              {props.editEntry && selectedField && (
         <button
           onClick={() => {
             if (props.item.entryId) {
@@ -394,11 +402,15 @@ function EditEntryField(props: {
               });
             }
           }}
-          className="w-7 h-7 justify-center items-center"
+          className="w-7 h-7 absolute right-1 top-1 justify-center items-center"
         >
           <img height={2} src={minus}></img>
         </button>
       )}
+      </div>
+
+
+
     </div>
   );
 }

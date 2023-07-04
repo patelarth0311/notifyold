@@ -12,7 +12,7 @@ export function FloatingActionButton() {
   const [toggle, setToggle] = useState(false);
 
   return (
-    <div className="fixed font-ver">
+    <div className="fixed font-ver z-50">
       <button
         onClick={() => {
           setToggle((prev) => !prev);

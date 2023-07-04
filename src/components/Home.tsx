@@ -18,8 +18,8 @@ import {
   CognitoRefreshToken,
   CognitoUserSession,
 } from "amazon-cognito-identity-js";
+import circle from "../svgs/circle.svg"
 import { makeToast } from "./Toast";
-
 import { useToast } from "@chakra-ui/react";
 
 var checkSession = () => {
@@ -74,7 +74,7 @@ export function Home() {
 }
 
 export function NoteLibrary() {
-  const [notes, setNote] = useState<Note[]>([]);
+  const [notes, setNote] = useState<Note[]>([] as Note[]);
   const toast = useToast()
   const { appStatus, setAppStatus } = useContext(MyContext);
   const [open, setOpen] = useState(false);
@@ -94,6 +94,7 @@ export function NoteLibrary() {
       setAppStatus({userId: "", response: "", status: ""})
     }
   },[])
+
 
 
  useEffect(() => {
@@ -135,8 +136,12 @@ export function NoteLibrary() {
 
 
 
+
+
   return (
-    <div className="flex  grow   font-ver   flex-col items-center gap-y-20">
+    <div className="flex  grow   font-ver   flex-col items-center gap-y-10">
+      
+      <div className="flex relative flex-col p-3 gap-y-14">
       <SearchBar
         searchText={searchText}
         setSearchText={(e: any) => {
@@ -151,52 +156,22 @@ export function NoteLibrary() {
           setOptionFilter(e);
         }}
       ></OptionsBar>
-      <div className="flex   justify-end  grow flex-col items-center   gap-y-20  ">
+      </div>
+      
+
+
+
+      <div className="flex   justify-end  grow flex-col items-center  w-full  gap-y-20  ">
         {notes.length > 0 ? (
           <>
             {open ? (
               <div className="flex flex-col justify-center  items-center h-full w-full   ">
+            
                 <CardModel
                   note={noteSelect}
                   open={open}
                   setOpen={(e: boolean) => setOpen(e)}
                 ></CardModel>
-
-                <div id="duo-container" className=" relative">
-                  <div className="   flex flex-row  pl-10  gap-5 pr-10 pb-10 justify-start  overflow-y-auto   w-screen    ">
-                    {notes
-                      .filter((item) => {
-                        const metConditionList = item.content.map((item) => {
-                          switch (optionFilter) {
-                            case "priority":
-                                return item.priority !== 0;
-                              case "flagged":
-                                return item.flag === true;
-                              case "date":
-                                return item.time !== undefined && item.time.length !== 0;
-                            default:
-                              return true;
-                          }
-                        
-                        });
-                        return ((item.content.length === 0 && ( optionFilter === "" || optionFilter === "all")) || metConditionList.includes(true));
-                      })
-                      .filter((item) => {
-                        return item.name
-                          .toLowerCase()
-                          .includes(searchText.toLowerCase());
-                      })
-                      .map((item, index) => (
-                        <Card
-                          note={item}
-                          action={() => {
-                            setNoteSelected(item);
-                          }}
-                          key={index}
-                        ></Card>
-                      ))}
-                  </div>
-                </div>
               </div>
             ) : (
               <div className="grid grow grid-cols-2 mobile2:grid-cols-1 gap-5 pb-10   gap-y-12 place-content-start">
@@ -254,9 +229,11 @@ export function Card(props: { action: () => void; note: Note }) {
     <div
       onClick={() => {
         props.action();
+        document.body.scrollTop = 0
+        console.log('a')
       }}
       className={
-        "min-w-[338px] w-[338px] min-h-[155px] max-h-[157px] h-[157px] shadow-custom rounded-[21.67px] bg-white "
+        "w-[338px]  h-[345px] rounded-[21.67px] bg-white "
       }
     >
       <div className="flex justify-start p-[16px] gap-x-5 h-full">
@@ -264,17 +241,24 @@ export function Card(props: { action: () => void; note: Note }) {
           <p className="text-[17px] font-bold text-left">{props.note.name}</p>
           <p className="text-[24px] font-bold text-left ">{props.note.content.length}</p>
         </div>
-        <div className="flex overflow-y-auto relative h-full flex-col w-full gap-y-1 text-gray-500">
+        <div className="flex overflow-y-auto overflow-x-hidden  relative h-full flex-col w-full gap-y-1 text-gray-500">
           {props.note.content.map((item, index) => (
-            <div className="flex flex-col items-start  ">
-
-            <p className="text-[15px] text-left" key={index}>
+            <div className="flex flex-row  gap-x-3  items-start   ">
+             
+              <img width={18} className="mt-1"  src={circle}></img>
+              
+          
+            <div >
+            <p className="text-[15px] whitespace-nowrap text-left " key={index}>
               {item.content}
             </p>
-            <div className="flex  gap-x-1 ">
-            <p className="text-[10px] font-medium text-black text-left">{item.time}</p>
+            <div className="flex gap-x-1 ">
+            <p className="text-[10px]  font-medium text-black text-left">{item.time}</p>
             <p className="text-[10px] font-medium  text-left text-[#f59e0b]">{"!".repeat(item.priority)}</p>
               </div>
+              </div>
+              
+
            
             </div>
           ))}
@@ -289,7 +273,7 @@ export function SearchBar(props: {
   setSearchText: (e: any) => void;
 }) {
   return (
-    <div className="flex relative justify-start gap-x-3  h-[44px] w-[350px] shadow-xl bg-white rounded-lg p-2">
+    <div className="flex relative justify-start gap-x-3  h-[44px] w-full max-w-[800px]  bg-white rounded-lg p-2">
       <img width={15} src={search}></img>
 
       <input

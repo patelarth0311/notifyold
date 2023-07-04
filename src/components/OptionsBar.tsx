@@ -8,7 +8,7 @@ export function OptionsBar(props: {
   optionFilter: string;
 }) {
   return (
-    <div className="flex mobile:justify-center   items-start ml-[10px] justify-start  gap-[11px] flex-wrap flex-row   p-1 ">
+    <div className="flex mobile:justify-center     items-start ml-[10px] justify-start  gap-[11px] flex-wrap flex-row   p-1 ">
       <Option
         setOptionFilter={props.setOptionFilter}
         optionFilter={props.optionFilter}
@@ -63,7 +63,7 @@ export function Option(props: {
       }}
       className={
         (props.value === props.optionFilter ? props.bg : " bg-white ") +
-        " flex pl-[12px] pb-[10px] pt-[10px] flex-col w-[164px] h-[82px] shadow-sm items-start rounded-[12px]  "
+        " flex pl-[12px] pb-[10px] pt-[10px] flex-col w-[164px] h-[82px]  items-start rounded-[12px]  "
       }
     >
       <div className="flex gap-x-10 flex-col h-full justify-between">
