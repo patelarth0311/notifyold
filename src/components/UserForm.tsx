@@ -117,6 +117,7 @@ export function ConfirmationPin(props: { user: User; register: () => void }) {
               console.log(res);
               if (res && res.status === 200) {
                 props.register();
+                
               }
             });
           }}

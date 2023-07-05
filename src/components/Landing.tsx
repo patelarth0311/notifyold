@@ -30,6 +30,8 @@ export function Landing() {
     const [user, setUser] = useState({userId: "", username: "", status: false} )
     const cognitoReg = /^(?!\s+)(?!.*\s+$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[$^*.[\]{}()?"!@#%&/\\,><':;|_~`=+\- ])[A-Za-z0-9$^*.[\]{}()?"!@#%&/\\,><':;|_~`=+\- ]{8,256}$/
     const {setAppStatus, appStatus} = useContext(MyContext)
+    const [showPosMessage, setShowPosMessage] = useState<boolean |  undefined>(undefined)
+
     var updateForm = (e : any) => {
 
         if (e.currentTarget) {
@@ -54,58 +56,14 @@ export function Landing() {
          
          buttonAction={() => {
 
-            signinUser(formData.email, formData.password).then((res) => {
-
-                if (res  && res.status === 200) { 
+            signinUser((userId: string) => (setAppStatus({...appStatus, userId: userId})), formData.email, formData.password, toast, () => {setFormData({email: "", password: "", confirmPassword: ""})})
+           
+         }}
                    
                    
-                    var idToken = res.data.AuthenticationResult.IdToken
-                    var accessToken = res.data.AuthenticationResult.AccessToken
-                    var refreshToken = res.data.AuthenticationResult.RefreshToken
-                    
-                    if (idToken && accessToken && refreshToken) {
-                        const sessionData = {
-                            IdToken: new CognitoIdToken({IdToken: idToken}),
-                            AccessToken: new CognitoAccessToken({AccessToken:  accessToken}),
-                            RefreshToken: new CognitoRefreshToken({RefreshToken: refreshToken}),
-                            ClockDrift: 0
-                        };
-                        
-                       
-                        const cachedSession = new CognitoUserSession(sessionData)
-                        
-                        if (cachedSession.isValid()) {
-                            setFormData({email: "", password: "", confirmPassword: ""})
-                            localStorage.setItem("IdToken", idToken)
-                            localStorage.setItem("AccessToken", idToken)
-                            localStorage.setItem("RefreshToken", idToken)
+                          
 
-                            {makeToast(   <p className="absolute left-10" >👋</p>,"Welcome to Notify!","border-indigo-500",toast)}
-                           
-                            var username = cachedSession.getAccessToken().payload.username
-                            setAppStatus({...appStatus, userId: username})
-                            localStorage.setItem("userId", username)
-                        } 
-                    } else {
-                        
-                    
-
-
-
-                        {makeToast(   <img className="absolute left-10" width={20} src={error}></img>,"Service error","border-[#dc2626]",toast)}
-                    }
-                  
-            
-                
-                    
-                } else {
-                    {makeToast(   <img className="absolute left-10" width={20} src={error}></img>,"Invalid user credentials","border-[#dc2626]",toast)}
-                
-                }
-                
-            })
-
-         }} setShow={
+setShow={
             () => {
                 setFormData({email: "", password: "", confirmPassword: ""})
                 setShowLogin(prev => !prev)
@@ -115,6 +73,7 @@ export function Landing() {
             {showPin ? <ConfirmationPin register={() => {
                 
                 setShowLogin(true)
+                setShowPin(false)
                 {makeToast(   <img className="absolute left-10" width={20} src={check}></img>,"Registration complete!","border-[#6FCF97]",toast)}
 
             }} user={user}></ConfirmationPin> :
@@ -124,23 +83,7 @@ export function Landing() {
                             if (formData.password.match(cognitoReg)
                             && formData.confirmPassword === formData.password) {
                                 setShowErrorMessage(false)
-                                addUser(formData.email, formData.password).then((res) => {
-                                    if (res  && res.status === 200) {
-                                        setFormData({email: "", password: "", confirmPassword: ""})
-                                        setShowPin(true)
-                                    
-                                        setUser((prev) => {
-
-                                            return {...prev,userId: res.data.UserSub, username: formData.email}
-                                        })
-                                        
-                                    } else {
-                                       
-                                    }
-
-
-
-                                })
+                                addUser(formData.email, formData.password, toast , () => {setFormData({email: "", password: "", confirmPassword: ""})})
                             } else if (formData.confirmPassword !== formData.password) {
                                 
 

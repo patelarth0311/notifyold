@@ -11,55 +11,16 @@ import { readNote } from "../API/Requests";
 import { useContext } from "react";
 import { MyContext } from "./Context";
 import error from "../svgs/error.svg";
-import {
-  CognitoUser,
-  CognitoAccessToken,
-  CognitoIdToken,
-  CognitoRefreshToken,
-  CognitoUserSession,
-} from "amazon-cognito-identity-js";
+
 import circle from "../svgs/circle.svg"
 import { makeToast } from "./Toast";
 import { useToast } from "@chakra-ui/react";
 
-var checkSession = () => {
-  const idToken = localStorage.getItem("IdToken");
-  const accessToken = localStorage.getItem("AccessToken");
-  const refreshToken = localStorage.getItem("RefreshToken");
-  if (idToken && accessToken && refreshToken) {
-    const AccessToken = new CognitoAccessToken({
-      AccessToken: accessToken,
-    });
-    const IdToken = new CognitoIdToken({
-      IdToken: idToken,
-    });
 
-    const RefreshToken = new CognitoRefreshToken({
-      RefreshToken: refreshToken,
-    });
-
-    const sessionData = {
-      IdToken: IdToken,
-      AccessToken: AccessToken,
-      RefreshToken: RefreshToken,
-    };
-
-    const cachedSession = new CognitoUserSession(sessionData);
-
-    if (cachedSession.isValid()) {
-      return true;
-    }
-
-    if (!RefreshToken.getToken()) {
-      return false;
-    }
-  }
-  return false;
-};
 
 export function Home() {
   const toast = useToast();
-  const { appStatus, setAppStatus } = useContext(MyContext);
+
 
   return (
     <div className="flex min-h-screen width-full justify-end text-center 0  relative flex-col  bg-neutral-50">
@@ -87,13 +48,7 @@ export function NoteLibrary() {
     noteId: "",
   });
 
-  useEffect(() => {
-    if (!checkSession()) {
-      {makeToast(   <img className="absolute left-10" width={20} src={error}></img>,"You have been signed out","border-[#dc2626]",toast)}
-      localStorage.clear()
-      setAppStatus({userId: "", response: "", status: ""})
-    }
-  },[])
+
 
 
 
@@ -178,7 +133,7 @@ export function NoteLibrary() {
                 {notes
                   .filter((item) => {
                     const metConditionList = item.content.map((item) => {
-                     
+                    
                       switch (optionFilter) {
                         case "priority":
                           return item.priority !== 0;
@@ -190,7 +145,7 @@ export function NoteLibrary() {
                           return true;
                       }
                     });
-         
+        
                     return ((item.content.length === 0 && ( optionFilter === "" || optionFilter === "all")) || metConditionList.includes(true));
                   })
                   .filter((item) => {
@@ -230,7 +185,7 @@ export function Card(props: { action: () => void; note: Note }) {
       onClick={() => {
         props.action();
         document.body.scrollTop = 0
-        console.log('a')
+       
       }}
       className={
         "w-[338px]  h-[345px] rounded-[21.67px] bg-white "
