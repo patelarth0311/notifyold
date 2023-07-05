@@ -59,6 +59,60 @@ export function CardModel(props: Model & { note: Note }) {
   return (
     <div className="flex gap-y-4 w-full h-full flex-col overflow-y-hidden relative ">
       <div className="flex z-50 p-3 top-3 flex-row gap-y-2 right-1 gap-x-3 justify-end absolute">
+
+      {(createEntry || editMode) && (
+          <div className=" flex gap-x-1">
+            {(props.note.content.length > 0 || createEntry) && (
+              <button
+                onClick={() => {
+                  setEditMode(false);
+                  setCreateEntry(false);
+                  setEntry({ content: "", time: "", priority: 0, flag: false });
+                }}
+                className={
+                  "bg-indigo-500 w-[90px] h-[30px] rounded-md text-white "
+                }
+              >
+                Cancel
+              </button>
+            )}
+
+            {createEntry && (
+              <button
+                onClick={() => {
+                  try {
+                    postEntry(
+                      entry,
+                      props.note.noteId,
+                      appStatus.userId ? appStatus.userId : ""
+                    ).then((res) => {
+                      if (res?.status === 200) {
+                        setAppStatus({
+                          ...appStatus,
+                          status: res.data.status,
+                          response: res.data,
+                        });
+                        setEditMode(false);
+                        setCreateEntry(false);
+                        setEntry({
+                          content: "",
+                          time: "",
+                          priority: 0,
+                          flag: false,
+                        });
+                      }
+                    });
+                  } catch (err) {}
+                }}
+                className={
+                  "bg-indigo-500 w-[90px] h-[30px]  rounded-md text-white "
+                }
+              >
+                Submit
+              </button>
+            )}
+          </div>
+        )}
         <button
           onClick={() => {
             deleteNote(
@@ -153,59 +207,6 @@ export function CardModel(props: Model & { note: Note }) {
       </div>
       <div className=" flex justify-between items-center w-full">
 
-        {(createEntry || editMode) && (
-          <div className=" flex gap-x-1">
-            {(props.note.content.length > 0 || createEntry) && (
-              <button
-                onClick={() => {
-                  setEditMode(false);
-                  setCreateEntry(false);
-                  setEntry({ content: "", time: "", priority: 0, flag: false });
-                }}
-                className={
-                  "bg-indigo-500 w-[90px] h-[30px] rounded-md text-white "
-                }
-              >
-                Cancel
-              </button>
-            )}
-
-            {createEntry && (
-              <button
-                onClick={() => {
-                  try {
-                    postEntry(
-                      entry,
-                      props.note.noteId,
-                      appStatus.userId ? appStatus.userId : ""
-                    ).then((res) => {
-                      if (res?.status === 200) {
-                        setAppStatus({
-                          ...appStatus,
-                          status: res.data.status,
-                          response: res.data,
-                        });
-                        setEditMode(false);
-                        setCreateEntry(false);
-                        setEntry({
-                          content: "",
-                          time: "",
-                          priority: 0,
-                          flag: false,
-                        });
-                      }
-                    });
-                  } catch (err) {}
-                }}
-                className={
-                  "bg-indigo-500 w-[90px] h-[30px]  rounded-md text-white "
-                }
-              >
-                Submit
-              </button>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
