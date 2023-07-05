@@ -56,7 +56,7 @@ export function Landing() {
          
          buttonAction={() => {
 
-            signinUser((userId: string) => (setAppStatus({...appStatus, userId: userId})), formData.email, formData.password, toast, () => {setFormData({email: "", password: "", confirmPassword: ""})})
+            signinUser(() => setShowPin(true), (userId: string) => (setAppStatus({...appStatus, userId: userId})), formData.email, formData.password, toast, () => {setFormData({email: "", password: "", confirmPassword: ""})})
            
          }}
                    

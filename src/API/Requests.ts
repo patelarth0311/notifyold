@@ -122,7 +122,7 @@ var postEntry = async(entry: Entry, noteId: string, userId: string) => {
     
   }
 
-var signinUser = (setUserId: (userId: string) => void,email: string, password: string, toast: CreateToastFnReturn , emptyForm: () => void) =>  {
+var signinUser = (setShowPin: () => void, setUserId: (userId: string) => void,email: string, password: string, toast: CreateToastFnReturn , emptyForm: () => void) =>  {
 
   var authenticationData = {
     Username: email,
@@ -176,7 +176,7 @@ var signinUser = (setUserId: (userId: string) => void,email: string, password: s
           
           setUserId(result.getAccessToken().payload.username)
           makeToast(  React.createElement('p', {className: "absolute left-10"}, "👋"),"Welcome to Notify!","border-indigo-500",toast)
-          
+          setShowPin()
         }
       });
 
