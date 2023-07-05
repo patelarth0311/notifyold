@@ -106,20 +106,15 @@ export function UserForm(
   );
 }
 
-export function ConfirmationPin(props: { user: User; register: () => void }) {
+export function ConfirmationPin(props: { email: string; register: () => void }) {
   return (
     <div className="font-ver relative">
       <p className="absolute top-[-30px] text-[14px]">Enter code</p>
       <HStack>
         <PinInput
           onComplete={(e) => {
-            confirmUser(props.user.username, e).then((res) => {
-              console.log(res);
-              if (res && res.status === 200) {
-                props.register();
-                
-              }
-            });
+       
+            confirmUser(props.email, e,() => props.register())
           }}
           type="number"
           placeholder=""

@@ -27,7 +27,7 @@ export function Landing() {
     const [showLogin, setShowLogin] = useState(true);
     const [formData, setFormData] = useState({email: "", password: "", confirmPassword: ""})
     const [showPin, setShowPin] = useState(false)
-    const [user, setUser] = useState({userId: "", username: "", status: false} )
+   
     const cognitoReg = /^(?!\s+)(?!.*\s+$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[$^*.[\]{}()?"!@#%&/\\,><':;|_~`=+\- ])[A-Za-z0-9$^*.[\]{}()?"!@#%&/\\,><':;|_~`=+\- ]{8,256}$/
     const {setAppStatus, appStatus} = useContext(MyContext)
     const [showPosMessage, setShowPosMessage] = useState<boolean |  undefined>(undefined)
@@ -56,7 +56,7 @@ export function Landing() {
          
          buttonAction={() => {
 
-            signinUser(() => setShowPin(true), (userId: string) => (setAppStatus({...appStatus, userId: userId})), formData.email, formData.password, toast, () => {setFormData({email: "", password: "", confirmPassword: ""})})
+            signinUser( (userId: string) => (setAppStatus({...appStatus, userId: userId})), formData.email, formData.password, toast, () => {setFormData({email: "", password: "", confirmPassword: ""})})
            
          }}
                    
@@ -74,16 +74,17 @@ setShow={
                 
                 setShowLogin(true)
                 setShowPin(false)
+                setFormData({email: "", password: "", confirmPassword: ""})
                 {makeToast(   <img className="absolute left-10" width={20} src={check}></img>,"Registration complete!","border-[#6FCF97]",toast)}
 
-            }} user={user}></ConfirmationPin> :
+            }} email={formData.email}></ConfirmationPin> :
                         <UserForm setForm={updateForm}  
                         showErrorMessage={showErrorMessage}
                         buttonAction={() => {
                             if (formData.password.match(cognitoReg)
                             && formData.confirmPassword === formData.password) {
                                 setShowErrorMessage(false)
-                                addUser(formData.email, formData.password, toast , () => {setFormData({email: "", password: "", confirmPassword: ""})})
+                                addUser(() => setShowPin(true),formData.email, formData.password, toast , () => {setFormData({email: "", password: "", confirmPassword: ""})})
                             } else if (formData.confirmPassword !== formData.password) {
                                 
 

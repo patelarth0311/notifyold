@@ -91,22 +91,43 @@ var postEntry = async(entry: Entry, noteId: string, userId: string) => {
 
   }
   
-  var confirmUser = async(email: string, confirmation: string  ) => {
-    try {
-      return await axios({
-        method: 'get',
-        url: `https://gssn270rpj.execute-api.us-east-1.amazonaws.com/notify/confirmuser?username=${email}&confirmation=${confirmation}`
-      })
-    } catch (err) {
+  var confirmUser = async(email: string, confirmation: string,  register: () => void ) => {
+
+
+    if (process.env.REACT_APP_UserPoolId &&    process.env.REACT_APP_ClientId) {
+    var poolData = {
+      UserPoolId: process.env.REACT_APP_UserPoolId,
+      ClientId: process.env.REACT_APP_ClientId
+    };
+
+
+      var userPool = new CognitoUserPool(poolData);
+      var userData = {
+        Username: email,
+        Pool: userPool,
+      };
+        var cognitoUser = new CognitoUser(userData);
+        cognitoUser.confirmRegistration(confirmation, true, function(err, result) {
+        if (err) {
+          alert(err.message || JSON.stringify(err));
+          return;
+        }
+        register()
       
+      });
     }
+  
 
   }
   
-  var addUser = async (email: string, password: string, toast: CreateToastFnReturn,  emptyForm: () => void) => {
+  
+  var addUser = async (setShowPin: () => void,email: string, password: string, toast: CreateToastFnReturn,  emptyForm: () => void) => {
+
+    if (process.env.REACT_APP_UserPoolId &&    process.env.REACT_APP_ClientId) {
+  
     var poolData = {
-      UserPoolId: 'us-east-1_nWJJZZRBO',
-      ClientId: 'h1a6dsl9no7clcntbjsqmh5gt', 
+      UserPoolId: process.env.REACT_APP_UserPoolId,
+      ClientId: process.env.REACT_APP_ClientId
     };
     var userPool = new CognitoUserPool(poolData);
   
@@ -114,16 +135,21 @@ var postEntry = async(entry: Entry, noteId: string, userId: string) => {
       err,
       result
     ) {
-      if (err) {
+      if (result) {
+    
+        setShowPin()
+       
+      } else if (err) {
         makeToast(    React.createElement('img', {className: "m-4", src: error, width: 20}),err.message || JSON.stringify(err),"border-[#dc2626]",toast)
       }
     
     });
-    
+  }
   }
 
-var signinUser = (setShowPin: () => void, setUserId: (userId: string) => void,email: string, password: string, toast: CreateToastFnReturn , emptyForm: () => void) =>  {
+var signinUser = ( setUserId: (userId: string) => void,email: string, password: string, toast: CreateToastFnReturn , emptyForm: () => void) =>  {
 
+  if (process.env.REACT_APP_UserPoolId &&    process.env.REACT_APP_ClientId) {
   var authenticationData = {
     Username: email,
     Password: password,
@@ -133,8 +159,8 @@ var signinUser = (setShowPin: () => void, setUserId: (userId: string) => void,em
     authenticationData
   );
   var poolData = {
-    UserPoolId: 'us-east-1_nWJJZZRBO', 
-    ClientId: 'h1a6dsl9no7clcntbjsqmh5gt', 
+    UserPoolId: process.env.REACT_APP_UserPoolId,
+    ClientId: process.env.REACT_APP_ClientId
   };
   var userPool = new CognitoUserPool(poolData);
   var userData = {
@@ -176,7 +202,7 @@ var signinUser = (setShowPin: () => void, setUserId: (userId: string) => void,em
           
           setUserId(result.getAccessToken().payload.username)
           makeToast(  React.createElement('p', {className: "absolute left-10"}, "👋"),"Welcome to Notify!","border-indigo-500",toast)
-          setShowPin()
+
         }
       });
 
@@ -193,7 +219,7 @@ var signinUser = (setShowPin: () => void, setUserId: (userId: string) => void,em
   });
   emptyForm()
 
-
+  }
 }
 
 export {addNote, readNote, postEntry, deleteNote, deleteEntry, changeEntry, addUser, confirmUser, signinUser}
