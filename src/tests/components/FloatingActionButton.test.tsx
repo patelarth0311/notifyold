@@ -5,7 +5,7 @@ import { log } from 'console';
 
 test('log out', async () => {
 
-    var logout = render(<FloatingActionButton></FloatingActionButton>)
+    var logout = render(<FloatingActionButton/>)
     expect(logout).toMatchSnapshot()
 
     act(() => {

@@ -23,7 +23,7 @@ describe('forms',  () => {
         },
         showErrorMessage: false
     }
-    const form =  render(<UserForm {...data}></UserForm>)
+    const form =  render(<UserForm {...data}/>)
 
     test('Check if email passed', async () => {
         expect(await form.findByRole('textbox', {name: 'email'})).toHaveValue("random03@gmail.com")
