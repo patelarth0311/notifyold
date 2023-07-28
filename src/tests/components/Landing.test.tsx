@@ -2,7 +2,7 @@ import React from "react";
 import { cleanup, getByText, render, fireEvent, act} from '@testing-library/react';
 import { Landing } from "../../components/Landing";
 import { UserForm } from "../../components/UserForm";
-import { shallow } from 'enzyme';
+
 
 test('render landing', () => {
     const landing = render(<Landing/>);
