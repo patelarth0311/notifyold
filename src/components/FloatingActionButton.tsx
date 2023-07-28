@@ -14,6 +14,7 @@ export function FloatingActionButton() {
   return (
     <div className="fixed font-ver z-50">
       <button
+      aria-label="fab"
         onClick={() => {
           setToggle((prev) => !prev);
         }}
@@ -57,12 +58,13 @@ export function Create(props: {fixed: boolean}) {
   );
 }
 
-function Logout() {
+export function Logout() {
 
     const {appStatus, setAppStatus} = useContext(MyContext)
 
   return (
     <button
+    aria-label="logout"
       onClick={() => {
         localStorage.clear();
         setAppStatus({userId: "", response: "", status: ""})

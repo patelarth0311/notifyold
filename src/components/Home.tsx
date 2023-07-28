@@ -129,7 +129,7 @@ export function NoteLibrary() {
                 ></CardModel>
               </div>
             ) : (
-              <div className="grid grow grid-cols-2 mobile2:grid-cols-1 gap-5 pb-10   gap-y-12 place-content-start">
+              <div  className="grid grow grid-cols-2 mobile2:grid-cols-1 gap-5 pb-10   gap-y-12 place-content-start">
                 {notes
                   .filter((item) => {
                     const metConditionList = item.content.map((item) => {
@@ -168,7 +168,7 @@ export function NoteLibrary() {
           </>
         ) : (
         
-          <div className=" grow flex flex-col items-center gap-y-10 ">
+          <div className=" grow flex flex-col items-center gap-y-10 min-h-[500px]">
           <p className="text-3xl font-ver ">No notes 🫨</p>
           <Create fixed={false}></Create>
           </div>
@@ -187,6 +187,7 @@ export function Card(props: { action: () => void; note: Note }) {
         document.body.scrollTop = 0
        
       }}
+      aria-label="note"
       className={
         "w-[338px]  h-[345px] rounded-[21.67px] bg-white "
       }

@@ -55,6 +55,7 @@ export function Option(props: {
 }) {
   return (
     <button
+      aria-label="option"
       value={props.value}
       onClick={(e) => {
         props.setOptionFilter(

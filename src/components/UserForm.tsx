@@ -18,10 +18,13 @@ export function UserForm(
 
             <input
               name="email"
+              aria-label="email"
+              role="textbox"
+              
               value={props.email}
               onChange={props.setForm}
               title="Email"
-              type="email"
+              type="text"
               className="w-[353px] pl-[10px] pr-[10px] rounded-[10px] h-[56px] border"
             ></input>
           </div>
@@ -36,6 +39,8 @@ export function UserForm(
               Password
             </p>
             <input
+              aria-label="password"
+             
               name="password"
               value={props.password}
               onFocus={(e) => {
@@ -58,6 +63,7 @@ export function UserForm(
                 Confirm Password
               </p>
               <input
+              aria-label="password-confirm"
                 disabled={props.password.length === 0}
                 name="confirmPassword"
                 value={props.confirmPassword}
@@ -85,6 +91,7 @@ export function UserForm(
 
         <div className="flex flex-col gap-y-5">
           <button
+            aria-label="process-user-button"
             onClick={props.buttonAction}
             className="w-[353px] h-[56px] pl-[10px] pr-[10px] rounded-[10px] font-ver bg-indigo-500 text-white text-base"
           >
@@ -94,6 +101,7 @@ export function UserForm(
           <div className="flex w-[353px]  items-center justify-end gap-x-3 ">
             <p>{props.messageText}</p>
             <button
+              aria-label="registrationoption"
               onClick={props.setShow}
               className="text-base text-indigo-500 font-ver"
             >
@@ -119,7 +127,7 @@ export function ConfirmationPin(props: { email: string; register: () => void }) 
           type="number"
           placeholder=""
         >
-          <PinInputField className="w-[50px] border h-[50px] rounded-[10px] pl-[19px] " />
+          <PinInputField className="w-[50px] border h-[50px] rounded-[10px] pl-[19px]" />
           <PinInputField className="w-[50px] border h-[50px] rounded-[10px] pl-[19px]" />
           <PinInputField className="w-[50px] border h-[50px] rounded-[10px] pl-[19px]" />
           <PinInputField className="w-[50px] border h-[50px] rounded-[10px] pl-[19px]" />

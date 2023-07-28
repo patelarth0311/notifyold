@@ -71,10 +71,10 @@ setShow={
             email={formData.email} password={formData.password} hasConfirmPassword={false} buttonText={"Log in"} messageText={"Don't have an account?"} optionText={"Sign up"}></UserForm>
             : <>
             {showPin ? <ConfirmationPin register={() => {
-                
+                setFormData({email: "", password: "", confirmPassword: ""})
                 setShowLogin(true)
                 setShowPin(false)
-                setFormData({email: "", password: "", confirmPassword: ""})
+            
                 {makeToast(   <img className="absolute left-10" width={20} src={check}></img>,"Registration complete!","border-[#6FCF97]",toast)}
 
             }} email={formData.email}></ConfirmationPin> :

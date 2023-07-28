@@ -28,13 +28,21 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prod" : "env-cmd -f ./.env react-scripts build"
+    "prod": "env-cmd -f ./.env react-scripts build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs",
+      "setupFilesAfterEnv": [
+        "./src/setupTests.ts"
+      ]
+    }
   },
   "browserslist": {
     "production": [
@@ -49,6 +57,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "babel-jest": "^29.6.2",
+    "jest": "^27.5.1",
+    "react-test-renderer": "^18.2.0",
     "tailwindcss": "^3.3.2"
   }
 }
